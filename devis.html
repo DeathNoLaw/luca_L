@@ -5,149 +5,402 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Devis Discord — Luca</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f13; color: #e8e8f0; min-height: 100vh; padding: 2rem 1rem; }
-.container { max-width: 680px; margin: 0 auto; }
-h1 { font-size: 24px; font-weight: 600; margin-bottom: 6px; }
-.subtitle { font-size: 14px; color: #888; margin-bottom: 2rem; }
-.section-title { font-size: 12px; font-weight: 500; color: #666; text-transform: uppercase; letter-spacing: 0.08em; margin: 1.5rem 0 0.6rem; }
-.item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; margin-bottom: 4px; transition: all 0.12s; }
-.item:hover { background: #1a1a24; border-color: #2a2a3a; }
-.item.selected { background: #0d1a2e; border-color: #2a5db0; }
-.check { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid #444; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s; }
-.item.selected .check { background: #3b82f6; border-color: #3b82f6; }
-.check svg { opacity: 0; transition: opacity 0.12s; }
-.item.selected .check svg { opacity: 1; }
-.label { flex: 1; font-size: 14px; }
-.price { font-size: 14px; font-weight: 500; color: #666; }
-.item.selected .price { color: #60a5fa; }
-.divider { height: 1px; background: #1e1e2a; margin: 1.5rem 0; }
-.total-bar { display: flex; align-items: center; justify-content: space-between; background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1rem; }
-.total-left .label-main { font-size: 14px; color: #888; }
-.total-left .label-count { font-size: 12px; color: #555; margin-top: 2px; }
-.total-amount { font-size: 28px; font-weight: 600; color: #e8e8f0; }
-.reset-btn { width: 100%; margin-top: 10px; padding: 9px; background: none; border: 1px solid #2a2a3a; border-radius: 8px; color: #666; font-size: 13px; cursor: pointer; transition: all 0.12s; }
-.reset-btn:hover { background: #1a1a24; color: #888; }
-.contact { margin-top: 1.5rem; text-align: center; font-size: 13px; color: #555; }
-.contact a { color: #3b82f6; text-decoration: none; }
-.contact a:hover { text-decoration: underline; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a84c;--gold2:#e8c96a;--dark:#0e0d0b;--dark2:#161410;--card:#1c1a15;--border:#2e2a20;--text:#e8e0cc;--muted:#8a7f6a;--bronze:#cd7f32;--silver:#a8a9ad;--gold-c:#c9a84c;--diamond:#a8d8ea}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--dark);color:var(--text);min-height:100vh}
+
+/* HEADER */
+.header{text-align:center;padding:2.5rem 1rem 1rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#1a1610 0%,var(--dark) 100%)}
+.header-logo{width:80px;height:80px;border-radius:50%;border:2px solid var(--gold);margin-bottom:1rem}
+.header h1{font-size:22px;font-weight:600;color:var(--gold2);letter-spacing:0.02em}
+.header p{font-size:13px;color:var(--muted);margin-top:4px}
+.header-tags{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.tag{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--border);color:var(--muted)}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:260px 1fr 260px;gap:20px;max-width:1200px;margin:0 auto;padding:1.5rem 1rem 6rem}
+
+/* SIDEBAR GAUCHE */
+.sidebar-left{display:flex;flex-direction:column;gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.card-title{font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.about-text{font-size:13px;color:var(--muted);line-height:1.7}
+.about-text strong{color:var(--text)}
+.stat{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;color:var(--muted)}
+.stat span{color:var(--text);font-weight:500}
+.discord-btn{display:block;text-align:center;background:linear-gradient(135deg,#5865f2,#4752c4);color:white;text-decoration:none;padding:10px;border-radius:8px;font-size:13px;font-weight:500;margin-top:4px;transition:opacity .15s}
+.discord-btn:hover{opacity:.85}
+
+/* TOTAL FLOTTANT */
+.total-fixed{position:fixed;bottom:0;left:0;right:0;background:#1c1a15ee;backdrop-filter:blur(8px);border-top:1px solid var(--border);padding:12px 2rem;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.total-fixed .label{font-size:13px;color:var(--muted)}
+.total-fixed .count{font-size:11px;color:var(--muted);margin-top:2px}
+.total-fixed .amount{font-size:26px;font-weight:600;color:var(--gold2)}
+.reset-btn{padding:8px 16px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer;transition:all .12s}
+.reset-btn:hover{background:var(--dark2);color:var(--text)}
+
+/* CALCULATEUR */
+.calc{}
+.section-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin:1.5rem 0 0.6rem;padding-left:4px}
+.section-label:first-child{margin-top:0}
+
+/* PACK */
+.pack{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden;transition:border-color .15s}
+.pack.selected{border-color:var(--gold)}
+.pack-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
+.pack-check{width:20px;height:20px;border-radius:5px;border:1.5px solid #444;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.pack.selected .pack-check{background:var(--gold);border-color:var(--gold)}
+.pack-check svg{opacity:0;transition:opacity .15s}
+.pack.selected .pack-check svg{opacity:1}
+.pack-name{flex:1;font-size:15px;font-weight:500}
+.pack-prices{text-align:right}
+.pack-old{font-size:12px;color:var(--muted);text-decoration:line-through}
+.pack-new{font-size:16px;font-weight:600;color:var(--gold2)}
+.pack-badge{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;margin-left:8px}
+.badge-bronze{background:#3d2200;color:var(--bronze)}
+.badge-gold{background:#2d2400;color:var(--gold-c)}
+.badge-diamond{background:#0a2030;color:var(--diamond)}
+.pack-items{border-top:1px solid var(--border);padding:12px 16px 14px}
+.pack-item{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13px;color:var(--muted);cursor:pointer;border-radius:6px;padding-left:4px;transition:background .12s}
+.pack-item:hover{background:#ffffff08}
+.pack-item.item-selected{color:var(--text)}
+.item-check{width:16px;height:16px;border-radius:4px;border:1.5px solid #444;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.pack-item.item-selected .item-check{background:var(--gold);border-color:var(--gold)}
+.item-check svg{opacity:0;transition:opacity .15s}
+.pack-item.item-selected .item-check svg{opacity:1}
+.item-label{flex:1}
+.item-price{font-size:12px;font-weight:500;color:#555}
+.pack-item.item-selected .item-price{color:var(--gold)}
+
+/* SIDEBAR DROITE — AVIS */
+.sidebar-right{display:flex;flex-direction:column;gap:12px}
+.review{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px}
+.stars{color:var(--gold);font-size:12px;margin-bottom:6px}
+.review-text{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.review-author{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:8px;margin-top:4px}
+.review-name{font-size:11px;font-weight:500;color:var(--text)}
+.review-date{font-size:10px;color:var(--muted)}
+
+/* AUTRES SERVICES */
+.other-item{display:flex;align-items:center;gap:10px;padding:8px 4px;font-size:13px;color:var(--muted);cursor:pointer;border-radius:6px;transition:background .12s}
+.other-item:hover{background:#ffffff08}
+.other-item.item-selected{color:var(--text)}
+.other-item .item-check{width:16px;height:16px;border-radius:4px;border:1.5px solid #444;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.other-item.item-selected .item-check{background:var(--gold);border-color:var(--gold)}
+.other-item .item-check svg{opacity:0;transition:opacity .15s}
+.other-item.item-selected .item-check svg{opacity:1}
+.other-note{font-size:12px;color:var(--muted);padding:8px 4px;font-style:italic}
+
+@media(max-width:900px){
+.layout{grid-template-columns:1fr}
+.sidebar-left,.sidebar-right{display:none}
+}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Configurez votre serveur Discord</h1>
-  <p class="subtitle">Sélectionnez les options souhaitées — le total se calcule automatiquement.</p>
 
-  <p class="section-title">Pack de base</p>
+<div class="header">
+  <img src="https://zupimages.net/up/26/37/9bxx.png" class="header-logo" alt="Logo Luca">
+  <h1>Création de Serveur Discord</h1>
+  <p>Configurez votre projet et estimez votre devis en temps réel</p>
+  <div class="header-tags">
+    <span class="tag">🎮 Gaming</span>
+    <span class="tag">📺 Streaming</span>
+    <span class="tag">🏢 Entreprises</span>
+    <span class="tag">👥 Communautés</span>
+  </div>
+</div>
 
-  <div class="item" onclick="toggle(this, 30)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Pack Essentiel — Structure + salons de base</span>
-    <span class="price">30 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 60)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Pack Standard — Essentiel + bots configurés</span>
-    <span class="price">60 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 100)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Pack Premium — Standard + fonctions avancées</span>
-    <span class="price">100 €</span>
-  </div>
+<div class="layout">
 
-  <p class="section-title">Fonctionnalités à la carte</p>
-
-  <div class="item" onclick="toggle(this, 10)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Annonce vidéo / live automatique</span>
-    <span class="price">10 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 10)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Système de suggestions</span>
-    <span class="price">10 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 10)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Starboard</span>
-    <span class="price">10 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 10)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Système de tickets</span>
-    <span class="price">10 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 15)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Système de rappels</span>
-    <span class="price">15 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 15)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Système de fiches membres</span>
-    <span class="price">15 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 10)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Salon image uniquement</span>
-    <span class="price">10 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 10)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Anti-raid & sécurité avancée</span>
-    <span class="price">10 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 10)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Logs de modération</span>
-    <span class="price">10 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 15)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Système de niveaux (XP)</span>
-    <span class="price">15 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 10)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Giveaway automatique</span>
-    <span class="price">10 €</span>
-  </div>
-  <div class="item" onclick="toggle(this, 10)">
-    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-    <span class="label">Captcha / règlement interactif</span>
-    <span class="price">10 €</span>
-  </div>
-
-  <div class="divider"></div>
-
-  <div class="total-bar">
-    <div class="total-left">
-      <div class="label-main">Total estimé</div>
-      <div class="label-count" id="count">0 option sélectionnée</div>
+  <!-- SIDEBAR GAUCHE -->
+  <div class="sidebar-left">
+    <div class="card">
+      <div class="card-title">👋 À propos</div>
+      <p class="about-text">Bonjour, je m'appelle <strong>Luca</strong>, j'ai 29 ans et je crée des serveurs Discord depuis <strong>2016</strong>.<br><br>Professionnel, sérieux et à l'écoute, je vous accompagne de A à Z dans votre projet.</p>
     </div>
-    <div class="total-amount" id="total">0 €</div>
+    <div class="card">
+      <div class="card-title">📊 En chiffres</div>
+      <div class="stat">🏆 <span>50+ projets</span> réalisés</div>
+      <div class="stat">⭐ <span>6 avis</span> 5 étoiles</div>
+      <div class="stat">🕐 Depuis <span>2016</span></div>
+      <div class="stat">🇫🇷 <span>Français</span>, basé en France</div>
+      <a href="https://discord.gg/C4M7xU4fWs" class="discord-btn" target="_blank">💬 Rejoindre mon Discord Vitrine</a>
+    </div>
+    <div class="card" id="total-side">
+      <div class="card-title">🧾 Votre devis</div>
+      <div class="stat">Sélections : <span id="count-side">0 option</span></div>
+      <div style="font-size:28px;font-weight:600;color:var(--gold2);margin-top:8px" id="total-side-amount">0 €</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Estimation non contractuelle</div>
+    </div>
   </div>
-  <button class="reset-btn" onclick="reset()">Réinitialiser</button>
 
-  <p class="contact">Des questions ? Contactez-moi sur <a href="https://discord.gg/C4M7xU4fWs">Discord</a></p>
+  <!-- CALCULATEUR -->
+  <div class="calc">
+
+    <p class="section-label">📦 Packs</p>
+
+    <!-- SERVICE DE BASE -->
+    <div class="pack" id="pack-base">
+      <div class="pack-header" onclick="togglePack('base')">
+        <div class="pack-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <span class="pack-name">🛡️ Service de Base <span style="font-size:11px;color:var(--muted);font-weight:400">(obligatoire)</span></span>
+        <div class="pack-prices">
+          <div class="pack-new">30 €</div>
+        </div>
+      </div>
+      <div class="pack-items">
+        <div class="pack-item item-selected" onclick="toggleItem(this,0)" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🎨 Structuration complète du serveur Discord</span><span class="item-price"></span></div>
+        <div class="pack-item item-selected" onclick="toggleItem(this,0)" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📁 Création jusqu'à 30 salons maximum</span><span class="item-price"></span></div>
+        <div class="pack-item item-selected" onclick="toggleItem(this,0)" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🏷️ Mise en place jusqu'à 20 rôles maximum</span><span class="item-price"></span></div>
+        <div class="pack-item item-selected" onclick="toggleItem(this,0)" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">👋 Messages de bienvenue et départ automatisés</span><span class="item-price"></span></div>
+        <div class="pack-item item-selected" onclick="toggleItem(this,0)" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📋 Règlement avec réaction obligatoire ou processus d'accueil</span><span class="item-price"></span></div>
+        <div class="pack-item item-selected" onclick="toggleItem(this,0)" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🔒 Protection basique & niveau de vérification</span><span class="item-price"></span></div>
+        <div class="pack-item item-selected" onclick="toggleItem(this,0)" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">⏰ Suivi de 3 jours offert après commande</span><span class="item-price"></span></div>
+      </div>
+    </div>
+
+    <!-- PACK BRONZE -->
+    <div class="pack" id="pack-bronze">
+      <div class="pack-header" onclick="togglePack('bronze')">
+        <div class="pack-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <span class="pack-name">🥉 Pack Bronze <span class="pack-badge badge-bronze">-31%</span></span>
+        <div class="pack-prices">
+          <div class="pack-old">80 €</div>
+          <div class="pack-new">55 €</div>
+        </div>
+      </div>
+      <div class="pack-items">
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📜 Règlement fourni</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📊 Système de nivellement</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">👑 Rôle automatique via réaction</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📝 Message d'embed x5</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🌐 Mode communauté</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🎂 Bot anniversaire</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📁 Salons +50 (total 130)</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🏷️ Rôles +30 (total 80)</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,10)" data-price="10"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">⏰ Suivi de 7 jours après livraison</span><span class="item-price">10 €</span></div>
+      </div>
+    </div>
+
+    <!-- PACK GOLD -->
+    <div class="pack" id="pack-gold">
+      <div class="pack-header" onclick="togglePack('gold')">
+        <div class="pack-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <span class="pack-name">🥇 Pack Gold <span class="pack-badge badge-gold">-41%</span></span>
+        <div class="pack-prices">
+          <div class="pack-old">145 €</div>
+          <div class="pack-new">85 €</div>
+        </div>
+      </div>
+      <div class="pack-items">
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📢 Annonce automatique vidéo/live</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">👥 Compteur de membres</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,10)" data-price="10"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">💡 Salon de suggestion automatisé</span><span class="item-price">10 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🔊 Vocal temporaire</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📄 Fiche perso</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🖼️ Salon image uniquement</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,10)" data-price="10"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📋 Log avancé pour la modération</span><span class="item-price">10 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">😄 50 emojis publics fournis</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,10)" data-price="10"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📁 Salons +70 (total 200)</span><span class="item-price">10 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,10)" data-price="10"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🏷️ Rôles +50 (total 130)</span><span class="item-price">10 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,20)" data-price="20"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">⏰ Suivi de 15 jours après livraison</span><span class="item-price">20 €</span></div>
+      </div>
+    </div>
+
+    <!-- PACK DIAMANT -->
+    <div class="pack" id="pack-diamond">
+      <div class="pack-header" onclick="togglePack('diamond')">
+        <div class="pack-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <span class="pack-name">💎 Pack Diamant <span class="pack-badge badge-diamond">-50%</span></span>
+        <div class="pack-prices">
+          <div class="pack-old">250 €</div>
+          <div class="pack-new">125 €</div>
+        </div>
+      </div>
+      <div class="pack-items">
+        <div class="pack-item" onclick="toggleItem(this,15)" data-price="15"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🛡️ Protection anti-raid/bot</span><span class="item-price">15 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,10)" data-price="10"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📩 Système de ticket pour la modération</span><span class="item-price">10 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,10)" data-price="10"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🔐 Protection CAPTCHA à l'entrée</span><span class="item-price">10 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,10)" data-price="10"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🔔 Alerte discrète de mot clé</span><span class="item-price">10 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,10)" data-price="10"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🤖 Bot Bump</span><span class="item-price">10 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">⭐ Système de Starboard</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">💰 Système d'économie</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🤫 Bot Confessions</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🎁 Bot Giveaway</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🔁 Message répétable</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🍯 Système de trap (honeypot)</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,15)" data-price="15"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📝 Message d'embed x50</span><span class="item-price">15 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,15)" data-price="15"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📁 Salons illimités (dans la limite Discord)</span><span class="item-price">15 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,15)" data-price="15"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🏷️ Rôles illimités (dans la limite Discord)</span><span class="item-price">15 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,35)" data-price="35"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">⏰ Suivi de 30 jours après livraison</span><span class="item-price">35 €</span></div>
+      </div>
+    </div>
+
+    <!-- AUTRES SERVICES -->
+    <p class="section-label">🛒 Autres services</p>
+    <div class="card" style="padding:1rem 1.25rem">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic">Ces options ne sont pas comprises dans les packs.</div>
+
+      <div style="font-size:12px;font-weight:600;color:var(--gold);margin-bottom:8px">⏰ Option de suivi</div>
+      <div class="other-item" onclick="toggleOther(this,5)"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">Suivi de 3 jours</span><span class="item-price" style="font-size:12px;color:#555">5 €</span></div>
+      <div class="other-item" onclick="toggleOther(this,10)"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">Suivi de 7 jours</span><span class="item-price" style="font-size:12px;color:#555">10 €</span></div>
+      <div class="other-item" onclick="toggleOther(this,20)"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">Suivi de 15 jours</span><span class="item-price" style="font-size:12px;color:#555">20 €</span></div>
+      <div class="other-item" onclick="toggleOther(this,35)"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">Suivi de 30 jours</span><span class="item-price" style="font-size:12px;color:#555">35 €</span></div>
+
+      <div style="font-size:12px;font-weight:600;color:var(--gold);margin:14px 0 8px">📚 Tutoriel</div>
+      <div class="other-item" onclick="toggleOther(this,10)"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📝 Tutoriel sur les embeds</span><span class="item-price" style="font-size:12px;color:#555">10 €</span></div>
+
+      <div style="font-size:12px;font-weight:600;color:var(--gold);margin:14px 0 8px">🔧 Modification de serveur existant</div>
+      <div class="other-note">💬 Le prix varie selon la taille, le nombre de rôles et la configuration de votre serveur Discord existant. Contactez-moi pour un devis personnalisé.</div>
+      <a href="https://discord.gg/C4M7xU4fWs" class="discord-btn" style="margin-top:10px" target="_blank">Me contacter pour un devis</a>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR DROITE — AVIS -->
+  <div class="sidebar-right">
+    <div class="card-title" style="padding:0 0 8px;font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em">⭐ Avis clients</div>
+
+    <div class="review">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Je suis ravi d'avoir fait appel à toi. Tu as su m'expliquer en détail ce que tu proposais, sans me forcer à prendre des services superflus, témoignant de ton professionnalisme.</p>
+      <div class="review-author"><span class="review-name">Ampheur</span><span class="review-date">12 juil. 2025</span></div>
+    </div>
+
+    <div class="review">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Je vous remercie énormément pour le service rendu, les membres sont très contents du discord, c'est propre franchement bravo, je vous conseillerai autour de moi.</p>
+      <div class="review-author"><span class="review-name">FredericDevita1</span><span class="review-date">20 janv. 2026</span></div>
+    </div>
+
+    <div class="review">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Merci beaucoup pour la création de mon Discord. Travail très professionnel, explications claires et bien détaillées du début à la fin. Je recommande sans hésiter.</p>
+      <div class="review-author"><span class="review-name">NicolasRobertoMinv</span><span class="review-date">14 janv. 2026</span></div>
+    </div>
+
+    <div class="review">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Très professionnel et à l'écoute.</p>
+      <div class="review-author"><span class="review-name">Andrzej_LK</span><span class="review-date">26 déc. 2025</span></div>
+    </div>
+
+    <div class="review">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Personne très sympathique, explique très bien comment se passe la création du serveur. Très rapide et efficace, je recommande fortement !</p>
+      <div class="review-author"><span class="review-name">ClaireJournalduneB</span><span class="review-date">10 nov. 2025</span></div>
+    </div>
+
+    <div class="review">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Personne agréable, très professionnel et efficace autant sur le contenu que sur la rapidité. Je conseille les yeux fermés. La team LZDG</p>
+      <div class="review-author"><span class="review-name">JoryArnoux</span><span class="review-date">12 juil. 2025</span></div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- TOTAL FIXE EN BAS -->
+<div class="total-fixed">
+  <div>
+    <div class="label">🧾 Total estimé</div>
+    <div class="count" id="count-bot">0 option sélectionnée</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px">
+    <div class="amount" id="total-bot">0 €</div>
+    <button class="reset-btn" onclick="reset()">Réinitialiser</button>
+  </div>
 </div>
 
 <script>
 let total = 0, count = 0;
-function toggle(el, price) {
-  el.classList.toggle('selected');
-  if (el.classList.contains('selected')) { total += price; count++; }
-  else { total -= price; count--; }
-  document.getElementById('total').textContent = total + ' €';
-  const c = document.getElementById('count');
-  c.textContent = count === 0 ? '0 option sélectionnée' : count + ' option' + (count > 1 ? 's' : '') + ' sélectionnée' + (count > 1 ? 's' : '');
+const PACK_PRICES = {base:30, bronze:55, gold:85, diamond:125};
+
+function updateDisplay() {
+  const t = total + ' €';
+  const c = count === 0 ? '0 option sélectionnée' : count + ' option' + (count>1?'s':'') + ' sélectionnée' + (count>1?'s':'');
+  document.getElementById('total-bot').textContent = t;
+  document.getElementById('count-bot').textContent = c;
+  document.getElementById('total-side-amount').textContent = t;
+  document.getElementById('count-side').textContent = count + ' option' + (count>1?'s':'');
 }
+
+function togglePack(id) {
+  const pack = document.getElementById('pack-'+id);
+  const isSelected = pack.classList.contains('selected');
+  const items = pack.querySelectorAll('.pack-item');
+
+  if (isSelected) {
+    pack.classList.remove('selected');
+    total -= PACK_PRICES[id];
+    count--;
+    items.forEach(item => {
+      if (item.classList.contains('item-selected')) {
+        item.classList.remove('item-selected');
+        total -= parseInt(item.dataset.price) || 0;
+        count--;
+      }
+    });
+  } else {
+    pack.classList.add('selected');
+    total += PACK_PRICES[id];
+    count++;
+    items.forEach(item => {
+      if (!item.classList.contains('item-selected') && parseInt(item.dataset.price) >= 0) {
+        item.classList.add('item-selected');
+        total += parseInt(item.dataset.price) || 0;
+        count++;
+      }
+    });
+  }
+  updateDisplay();
+}
+
+function toggleItem(el, price) {
+  const pack = el.closest('.pack');
+  const isSelected = el.classList.contains('item-selected');
+  if (pack && pack.id === 'pack-base') return;
+
+  if (isSelected) {
+    el.classList.remove('item-selected');
+    total -= price;
+    count--;
+    if (pack && pack.classList.contains('selected')) {
+      pack.classList.remove('selected');
+      total -= PACK_PRICES[pack.id.replace('pack-','')];
+      count--;
+    }
+  } else {
+    el.classList.add('item-selected');
+    total += price;
+    count++;
+  }
+  updateDisplay();
+}
+
+function toggleOther(el, price) {
+  const isSelected = el.classList.contains('item-selected');
+  if (isSelected) {
+    el.classList.remove('item-selected');
+    total -= price;
+    count--;
+  } else {
+    el.classList.add('item-selected');
+    total += price;
+    count++;
+  }
+  updateDisplay();
+}
+
 function reset() {
-  document.querySelectorAll('.item.selected').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.pack.selected').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll('.pack-item.item-selected').forEach(i => i.classList.remove('item-selected'));
+  document.querySelectorAll('.other-item.item-selected').forEach(i => i.classList.remove('item-selected'));
+  document.querySelectorAll('#pack-base .pack-item').forEach(i => i.classList.add('item-selected'));
   total = 0; count = 0;
-  document.getElementById('total').textContent = '0 €';
-  document.getElementById('count').textContent = '0 option sélectionnée';
+  updateDisplay();
 }
 </script>
 </body>
