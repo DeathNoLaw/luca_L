@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devis Discord — Luca</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f13; color: #e8e8f0; min-height: 100vh; padding: 2rem 1rem; }
+.container { max-width: 680px; margin: 0 auto; }
+h1 { font-size: 24px; font-weight: 600; margin-bottom: 6px; }
+.subtitle { font-size: 14px; color: #888; margin-bottom: 2rem; }
+.section-title { font-size: 12px; font-weight: 500; color: #666; text-transform: uppercase; letter-spacing: 0.08em; margin: 1.5rem 0 0.6rem; }
+.item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; margin-bottom: 4px; transition: all 0.12s; }
+.item:hover { background: #1a1a24; border-color: #2a2a3a; }
+.item.selected { background: #0d1a2e; border-color: #2a5db0; }
+.check { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid #444; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s; }
+.item.selected .check { background: #3b82f6; border-color: #3b82f6; }
+.check svg { opacity: 0; transition: opacity 0.12s; }
+.item.selected .check svg { opacity: 1; }
+.label { flex: 1; font-size: 14px; }
+.price { font-size: 14px; font-weight: 500; color: #666; }
+.item.selected .price { color: #60a5fa; }
+.divider { height: 1px; background: #1e1e2a; margin: 1.5rem 0; }
+.total-bar { display: flex; align-items: center; justify-content: space-between; background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1rem; }
+.total-left .label-main { font-size: 14px; color: #888; }
+.total-left .label-count { font-size: 12px; color: #555; margin-top: 2px; }
+.total-amount { font-size: 28px; font-weight: 600; color: #e8e8f0; }
+.reset-btn { width: 100%; margin-top: 10px; padding: 9px; background: none; border: 1px solid #2a2a3a; border-radius: 8px; color: #666; font-size: 13px; cursor: pointer; transition: all 0.12s; }
+.reset-btn:hover { background: #1a1a24; color: #888; }
+.contact { margin-top: 1.5rem; text-align: center; font-size: 13px; color: #555; }
+.contact a { color: #3b82f6; text-decoration: none; }
+.contact a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Configurez votre serveur Discord</h1>
+  <p class="subtitle">Sélectionnez les options souhaitées — le total se calcule automatiquement.</p>
+
+  <p class="section-title">Pack de base</p>
+
+  <div class="item" onclick="toggle(this, 30)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Pack Essentiel — Structure + salons de base</span>
+    <span class="price">30 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 60)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Pack Standard — Essentiel + bots configurés</span>
+    <span class="price">60 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 100)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Pack Premium — Standard + fonctions avancées</span>
+    <span class="price">100 €</span>
+  </div>
+
+  <p class="section-title">Fonctionnalités à la carte</p>
+
+  <div class="item" onclick="toggle(this, 10)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Annonce vidéo / live automatique</span>
+    <span class="price">10 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 10)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Système de suggestions</span>
+    <span class="price">10 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 10)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Starboard</span>
+    <span class="price">10 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 10)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Système de tickets</span>
+    <span class="price">10 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 15)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Système de rappels</span>
+    <span class="price">15 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 15)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Système de fiches membres</span>
+    <span class="price">15 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 10)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Salon image uniquement</span>
+    <span class="price">10 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 10)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Anti-raid & sécurité avancée</span>
+    <span class="price">10 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 10)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Logs de modération</span>
+    <span class="price">10 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 15)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Système de niveaux (XP)</span>
+    <span class="price">15 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 10)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Giveaway automatique</span>
+    <span class="price">10 €</span>
+  </div>
+  <div class="item" onclick="toggle(this, 10)">
+    <div class="check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    <span class="label">Captcha / règlement interactif</span>
+    <span class="price">10 €</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="total-bar">
+    <div class="total-left">
+      <div class="label-main">Total estimé</div>
+      <div class="label-count" id="count">0 option sélectionnée</div>
+    </div>
+    <div class="total-amount" id="total">0 €</div>
+  </div>
+  <button class="reset-btn" onclick="reset()">Réinitialiser</button>
+
+  <p class="contact">Des questions ? Contactez-moi sur <a href="https://discord.gg/C4M7xU4fWs">Discord</a></p>
+</div>
+
+<script>
+let total = 0, count = 0;
+function toggle(el, price) {
+  el.classList.toggle('selected');
+  if (el.classList.contains('selected')) { total += price; count++; }
+  else { total -= price; count--; }
+  document.getElementById('total').textContent = total + ' €';
+  const c = document.getElementById('count');
+  c.textContent = count === 0 ? '0 option sélectionnée' : count + ' option' + (count > 1 ? 's' : '') + ' sélectionnée' + (count > 1 ? 's' : '');
+}
+function reset() {
+  document.querySelectorAll('.item.selected').forEach(el => el.classList.remove('selected'));
+  total = 0; count = 0;
+  document.getElementById('total').textContent = '0 €';
+  document.getElementById('count').textContent = '0 option sélectionnée';
+}
+</script>
+</body>
+</html>
