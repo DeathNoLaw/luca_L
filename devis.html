@@ -413,7 +413,7 @@ function reset() {
   document.querySelectorAll('.pack:not(#pack-base).selected').forEach(p => p.classList.remove('selected'));
   document.querySelectorAll('.pack:not(#pack-base) .pack-item.item-selected').forEach(i => i.classList.remove('item-selected'));
   document.querySelectorAll('.other-item.item-selected').forEach(i => i.classList.remove('item-selected'));
-  total = 30; count = 1;
+  total = 0; count = 0;
   updateDisplay();
 }
 
