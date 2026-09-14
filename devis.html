@@ -326,6 +326,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div style="display:flex;align-items:center;gap:16px">
       <div class="amount" id="total-bot">30 €</div>
       <button class="reset-btn" onclick="reset()">Réinitialiser</button>
+      <button class="reset-btn" onclick="genererDevis()" style="background:#2d2a20;color:var(--gold)">📋 Copier mon devis</button>
     </div>
   </div>
 </div>
@@ -418,6 +419,39 @@ function reset() {
   updateDisplay();
 }
 
+function genererDevis() {
+  let lines = ['📋 Mon devis Discord — Luca', ''];
+  lines.push('✅ Service de Base — 30 €');
+  
+  ['bronze','gold','diamond'].forEach(id => {
+    const pack = document.getElementById('pack-'+id);
+    const names = {bronze:'Pack Bronze — 55 €', gold:'Pack Gold — 85 €', diamond:'Pack Diamant — 125 €'};
+    if (pack.classList.contains('selected')) {
+      lines.push('✅ ' + names[id]);
+      pack.querySelectorAll('.pack-item.item-selected').forEach(item => {
+        lines.push('   • ' + item.querySelector('.item-label').textContent);
+      });
+    } else {
+      pack.querySelectorAll('.pack-item.item-selected').forEach(item => {
+        const price = item.dataset.price;
+        lines.push('✅ ' + item.querySelector('.item-label').textContent + ' — ' + price + ' €');
+      });
+    }
+  });
+
+  document.querySelectorAll('.other-item.item-selected').forEach(item => {
+    lines.push('✅ ' + item.querySelector('.item-label').textContent);
+  });
+
+  lines.push('');
+  lines.push('💰 Total estimé : ' + total + ' €');
+  lines.push('');
+  lines.push('Généré sur deathnolaw.github.io/luca_L/devis.html');
+
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    alert('✅ Devis copié ! Tu peux maintenant le coller sur Discord.');
+  });
+}
 updateDisplay();
 </script>
 </body>
