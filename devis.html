@@ -354,28 +354,26 @@ function togglePack(id) {
     total -= PACK_PRICES[id];
     count--;
     items.forEach(item => {
-      if (item.classList.contains('item-selected')) {
-        item.classList.remove('item-selected');
-        total -= parseInt(item.dataset.price) || 0;
-        count--;
-      }
+      item.classList.remove('item-selected');
     });
+    count = document.querySelectorAll('.item-selected, .pack.selected').length;
   } else {
-    // Avant de cocher le pack, on soustrait les options déjà cochées individuellement
     items.forEach(item => {
-      if (item.classList.contains('item-selected')) {
-        item.classList.remove('item-selected');
-        total -= parseInt(item.dataset.price) || 0;
-        count--;
-      }
+      item.classList.remove('item-selected');
     });
     pack.classList.add('selected');
-    total += PACK_PRICES[id];
-    count++;
-    items.forEach(item => {
-      item.classList.add('item-selected');
-      count++;
+    total = 0;
+    document.querySelectorAll('.pack.selected').forEach(p => {
+      total += PACK_PRICES[p.id.replace('pack-','')];
     });
+    document.querySelectorAll('.pack:not(.selected) .pack-item.item-selected').forEach(item => {
+      total += parseInt(item.dataset.price) || 0;
+    });
+    document.querySelectorAll('.other-item.item-selected').forEach(item => {
+      total += parseInt(item.dataset.price) || 0;
+    });
+    items.forEach(item => item.classList.add('item-selected'));
+    count = document.querySelectorAll('.item-selected').length + document.querySelectorAll('.pack.selected').length;
   }
   updateDisplay();
 }
