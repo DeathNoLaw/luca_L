@@ -324,7 +324,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="count" id="count-bot">0 option sélectionnée</div>
     </div>
     <div style="display:flex;align-items:center;gap:16px">
-      <div class="amount" id="total-bot">30 €</div>
+      <div class="amount" id="total-bot">0 €</div>
       <button class="reset-btn" onclick="reset()">Réinitialiser</button>
       <button class="reset-btn" onclick="genererDevis()" style="background:#2d2a20;color:var(--gold)">📋 Copier mon devis</button>
     </div>
@@ -337,7 +337,7 @@ const PACK_PRICES = {base:30, bronze:55, gold:85, diamond:125};
 
 function updateDisplay() {
   const t = total + ' €';
-  const c = count <= 1 ? '1 option sélectionnée' : count + ' options sélectionnées';
+  const c = count === 0 ? '0 option sélectionnée' : count === 1 ? '1 option sélectionnée' : count + ' options sélectionnées';
   document.getElementById('total-bot').textContent = t;
   document.getElementById('count-bot').textContent = c;
   document.getElementById('total-side-amount').textContent = t;
