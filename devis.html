@@ -353,13 +353,12 @@ function togglePack(id) {
     pack.classList.remove('selected');
     total -= PACK_PRICES[id];
     count--;
-    items.forEach(item => {
-      if (item.classList.contains('item-selected')) {
-        item.classList.remove('item-selected');
-        total -= parseInt(item.dataset.price) || 0;
-        count--;
-      }
-    });
+   items.forEach(item => {
+  if (item.classList.contains('item-selected')) {
+    item.classList.remove('item-selected');
+    count--;
+  }
+});
   } else {
     pack.classList.add('selected');
     total += PACK_PRICES[id];
@@ -367,7 +366,6 @@ function togglePack(id) {
     items.forEach(item => {
       if (!item.classList.contains('item-selected')) {
         item.classList.add('item-selected');
-        total += parseInt(item.dataset.price) || 0;
         count++;
       }
     });
