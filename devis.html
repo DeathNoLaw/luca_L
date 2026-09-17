@@ -61,8 +61,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .pack-item{display:flex;align-items:center;gap:10px;padding:6px 4px;font-size:13px;color:var(--muted);cursor:pointer;border-radius:6px;transition:background .12s}
 .pack-item:hover{background:#ffffff08}
 .pack-item.item-selected{color:var(--text)}
-.pack-item.locked{cursor:default}
-.pack-item.locked:hover{background:transparent}
 .item-check{width:16px;height:16px;border-radius:4px;border:1.5px solid #444;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
 .pack-item.item-selected .item-check{background:var(--gold);border-color:var(--gold)}
 .item-check svg{opacity:0;transition:opacity .15s}
@@ -70,6 +68,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .item-label{flex:1}
 .item-price{font-size:12px;font-weight:500;color:#555}
 .pack-item.item-selected .item-price{color:var(--gold)}
+.pack-base-desc{padding:12px 16px 14px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);line-height:1.8}
 .sidebar-right{display:flex;flex-direction:column;gap:12px}
 .review{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px}
 .stars{color:var(--gold);font-size:12px;margin-bottom:6px}
@@ -115,19 +114,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="card">
       <div class="card-title">📬 Me contacter</div>
       <div class="social-row">
-        <!-- Discord -->
         <a href="https://discord.gg/C4M7xU4fWs" class="social-link" target="_blank" title="Discord" style="background:#5865f2">
           <svg viewBox="0 0 24 24" fill="white"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
         </a>
-        <!-- Instagram -->
         <a href="https://www.instagram.com/archival_97" class="social-link" target="_blank" title="Instagram" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">
           <svg viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
         </a>
-        <!-- Facebook -->
         <a href="https://www.facebook.com/deathnolaw.aoe/" class="social-link" target="_blank" title="Facebook" style="background:#1877f2">
           <svg viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </a>
-        <!-- TikTok -->
         <a href="https://www.tiktok.com/@archilaw1" class="social-link" target="_blank" title="TikTok" style="background:#010101">
           <svg viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
         </a>
@@ -164,18 +159,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <!-- SERVICE DE BASE -->
     <div class="pack" id="pack-base">
       <div class="pack-header" onclick="togglePack('base')">
-<div class="pack-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-        <span class="pack-name">🛡️ Service de Base <span style="font-size:11px;color:var(--muted);font-weight:400">(inclus dans chaque pack)</span></span>
+        <div class="pack-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <span class="pack-name">🛡️ Service de Base</span>
         <div class="pack-prices"><div class="pack-new">30 €</div></div>
       </div>
-      <div class="pack-items">
-       <div class="pack-item" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🎨 Structuration complète du serveur Discord</span></div>
-        <div class="pack-item" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📁 Création jusqu'à 30 salons maximum</span></div>
-        <div class="pack-item" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🏷️ Mise en place jusqu'à 20 rôles maximum</span></div>
-        <div class="pack-item" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">👋 Messages de bienvenue et départ automatisés</span></div>
-        <div class="pack-item" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📋 Règlement avec réaction obligatoire ou processus d'accueil</span></div>
-        <div class="pack-item" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🔒 Protection basique & niveau de vérification</span></div>
-        <div class="pack-item" data-price="0"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">⏰ Suivi de 3 jours offert après commande</span></div>
+      <div class="pack-base-desc">
+        🎨 Structuration complète · 📁 Jusqu'à 30 salons · 🏷️ Jusqu'à 20 rôles · 👋 Messages bienvenue/départ · 📋 Règlement interactif · 🔒 Protection basique · ⏰ Suivi 3 jours offert
       </div>
     </div>
 
@@ -240,6 +229,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🎁 Bot Giveaway</span><span class="item-price">5 €</span></div>
         <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🔁 Message répétable</span><span class="item-price">5 €</span></div>
         <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🍯 Système de trap (honeypot)</span><span class="item-price">5 €</span></div>
+        <div class="pack-item" onclick="toggleItem(this,5)" data-price="5"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🎵 Bot musique</span><span class="item-price">5 €</span></div>
         <div class="pack-item" onclick="toggleItem(this,15)" data-price="15"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📝 Message d'embed x50</span><span class="item-price">15 €</span></div>
         <div class="pack-item" onclick="toggleItem(this,15)" data-price="15"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">📁 Salons illimités (dans la limite Discord)</span><span class="item-price">15 €</span></div>
         <div class="pack-item" onclick="toggleItem(this,15)" data-price="15"><div class="item-check"><svg width="9" height="7" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="item-label">🏷️ Rôles illimités (dans la limite Discord)</span><span class="item-price">15 €</span></div>
@@ -270,49 +260,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <!-- SIDEBAR DROITE — AVIS -->
   <div class="sidebar-right">
     <div class="card-title" style="padding:0 0 8px;font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em">⭐ Avis clients</div>
-
     <div class="review">
       <div class="stars">★★★★★</div>
       <p class="review-text">Je suis ravi d'avoir fait appel à toi. Tu as su m'expliquer en détail ce que tu proposais, sans me forcer à prendre des services superflus, ce qui est un point très appréciable et honnête, témoignant de ton professionnalisme. Professionnalisme que l'on retrouve également dans la rapidité d'exécution et le soin accordé à chaque tâche. J'avais un Discord déjà existant et tu as respecté tout ce que je voulais conserver. Un grand merci pour ton travail !</p>
       <div class="review-author"><span class="review-name">Ampheur</span><span class="review-date">12 juil. 2025</span></div>
     </div>
-
     <div class="review">
       <div class="stars">★★★★★</div>
       <p class="review-text">Je vous remercie énormément pour le service rendu, les membres sont très contents du discord, c'est propre franchement bravo, je vous conseillerai autour de moi.</p>
       <div class="review-author"><span class="review-name">FredericDevita1</span><span class="review-date">20 janv. 2026</span></div>
     </div>
-
     <div class="review">
       <div class="stars">★★★★★</div>
       <p class="review-text">Merci beaucoup pour la création de mon Discord. Travail très professionnel, explications claires et bien détaillées du début à la fin. Je recommande sans hésiter.</p>
       <div class="review-author"><span class="review-name">NicolasRobertoMinv</span><span class="review-date">14 janv. 2026</span></div>
     </div>
-
     <div class="review">
       <div class="stars">★★★★★</div>
       <p class="review-text">N'hésitez pas à solliciter ses services. C'est une personne très compétente et professionnelle.</p>
       <div class="review-author"><span class="review-name">NicolasRobertoMinv</span><span class="review-date">14 janv. 2026</span></div>
     </div>
-
     <div class="review">
       <div class="stars">★★★★★</div>
       <p class="review-text">Très professionnel et à l'écoute.</p>
       <div class="review-author"><span class="review-name">Andrzej_LK</span><span class="review-date">26 déc. 2025</span></div>
     </div>
-
     <div class="review">
       <div class="stars">★★★★★</div>
       <p class="review-text">Personne très sympathique, explique très bien comment se passe la création du serveur. Très rapide et efficace, je recommande fortement !</p>
       <div class="review-author"><span class="review-name">ClaireJournalduneB</span><span class="review-date">10 nov. 2025</span></div>
     </div>
-
     <div class="review">
       <div class="stars">★★★★★</div>
       <p class="review-text">Personne agréable, très professionnel et efficace autant sur le contenu que sur la rapidité. Je conseille les yeux fermés. La team LZDG</p>
       <div class="review-author"><span class="review-name">JoryArnoux</span><span class="review-date">12 juil. 2025</span></div>
     </div>
-
   </div>
 
 </div>
@@ -354,14 +336,10 @@ function togglePack(id) {
     pack.classList.remove('selected');
     total -= PACK_PRICES[id];
     count--;
-    items.forEach(item => {
-      item.classList.remove('item-selected');
-    });
+    items.forEach(item => item.classList.remove('item-selected'));
     count = document.querySelectorAll('.item-selected, .pack.selected').length;
   } else {
-    items.forEach(item => {
-      item.classList.remove('item-selected');
-    });
+    items.forEach(item => item.classList.remove('item-selected'));
     pack.classList.add('selected');
     total = 0;
     document.querySelectorAll('.pack.selected').forEach(p => {
@@ -381,7 +359,6 @@ function togglePack(id) {
 
 function toggleItem(el, price) {
   const pack = el.closest('.pack');
-  if (el.classList.contains('locked')) return;
   const isSelected = el.classList.contains('item-selected');
 
   if (isSelected) {
@@ -416,8 +393,8 @@ function toggleOther(el, price) {
 }
 
 function reset() {
-  document.querySelectorAll('.pack:not(#pack-base).selected').forEach(p => p.classList.remove('selected'));
-  document.querySelectorAll('.pack:not(#pack-base) .pack-item.item-selected').forEach(i => i.classList.remove('item-selected'));
+  document.querySelectorAll('.pack.selected').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll('.pack-item.item-selected').forEach(i => i.classList.remove('item-selected'));
   document.querySelectorAll('.other-item.item-selected').forEach(i => i.classList.remove('item-selected'));
   total = 0; count = 0;
   updateDisplay();
@@ -425,8 +402,9 @@ function reset() {
 
 function genererDevis() {
   let lines = ['📋 Mon devis Discord — Luca', ''];
-  lines.push('✅ Service de Base — 30 €');
-  
+  const packBase = document.getElementById('pack-base');
+  if (packBase.classList.contains('selected')) lines.push('✅ Service de Base — 30 €');
+
   ['bronze','gold','diamond'].forEach(id => {
     const pack = document.getElementById('pack-'+id);
     const names = {bronze:'Pack Bronze — 55 €', gold:'Pack Gold — 85 €', diamond:'Pack Diamant — 125 €'};
